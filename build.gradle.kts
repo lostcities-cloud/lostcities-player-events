@@ -9,7 +9,7 @@ plugins {
 
 group = "io.dereknelson.lostcities"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_16
 
 repositories {
 
@@ -29,22 +29,25 @@ repositories {
 
 dependencies {
 	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
+
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
+	//implementation("")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 
-	implementation("com.fasterxml.jackson.core:jackson-core:2.10.2")
-	implementation("com.fasterxml.jackson.core:jackson-core:2.10.2")
+	//implementation("com.fasterxml.jackson.core:jackson-core:2.5.2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
+
+
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "17"
+		jvmTarget = "16"
 	}
 }
 
