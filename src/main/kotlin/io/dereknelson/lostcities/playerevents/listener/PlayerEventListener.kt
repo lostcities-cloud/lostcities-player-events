@@ -1,6 +1,9 @@
 package io.dereknelson.lostcities.playerevents.listener
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import io.dereknelson.lostcities.models.PlayerViewDto
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.Message as AmqpMessage
 import io.dereknelson.lostcities.models.matches.PlayerEvent
@@ -24,12 +27,18 @@ class PlayerEventListener(
 
     @RabbitListener(queues = ["player-event"])
     fun createGame(gameEvent: AmqpMessage) {
-        //println("Message read from player-event: ${String(gameEvent.body)}\n\n\n\n\n\n\n\n\n\n\n\n")
-        val message = objectMapper.readValue(gameEvent.body, Array<PlayerEvent>::class.java)
+        println("Retrieved gameEvent: ${String(gameEvent.body)}")
 
-        println("Retrieved gameEvent: ${message}")
+        val events = objectMapper.readValue<Map<String, PlayerViewDto>>(String(gameEvent.body))
 
-        websocketTemplate.convertAndSend("/games-broker/1", gameEvent.body)
+        events.forEach { (player, view) ->
+            websocketTemplate.convertAndSend(
+                "/games-broker/${view.id}/${player}",
+                view
+            )
+        }
+
     }
 
 }
+

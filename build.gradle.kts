@@ -31,11 +31,13 @@ dependencies {
 	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
-	//implementation("")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
+
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
 	//implementation("com.fasterxml.jackson.core:jackson-core:2.5.2")
 

@@ -4,7 +4,7 @@ logging:
     io.dereknelson.lostcities: debug
     org.springframework.security.web.FilterChainProxy: debug
     org.hibernate: info
-    org.springframework.amqp.rabbit.connection: debug
+    org.springframework.amqp.rabbit: debug
 
 spring:
   profiles:
