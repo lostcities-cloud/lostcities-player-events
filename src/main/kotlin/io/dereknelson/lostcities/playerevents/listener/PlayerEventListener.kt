@@ -1,18 +1,14 @@
 package io.dereknelson.lostcities.playerevents.listener
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.dereknelson.lostcities.models.PlayerViewDto
 import org.springframework.amqp.core.Queue
-import org.springframework.amqp.core.Message as AmqpMessage
-import io.dereknelson.lostcities.models.matches.PlayerEvent
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.context.annotation.Bean
-
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
-
+import org.springframework.amqp.core.Message as AmqpMessage
 
 @Component
 class PlayerEventListener(
@@ -33,12 +29,9 @@ class PlayerEventListener(
 
         events.forEach { (player, view) ->
             websocketTemplate.convertAndSend(
-                "/games-broker/${view.id}/${player}",
+                "/games-broker/${view.id}/$player",
                 view
             )
         }
-
     }
-
 }
-
