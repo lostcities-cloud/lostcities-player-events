@@ -16,12 +16,16 @@ class PlayerEventListener(
     val websocketTemplate: SimpMessagingTemplate
 ) {
 
-    @Bean
-    fun createGame() = Queue("player-event")
+    companion object {
+        const val PLAYER_EVENT = "player-event"
+    }
 
-    @RabbitListener(queues = ["player-event"])
-    fun createGame(gameEvent: AmqpMessage) = objectMapper
-        .readValue<Map<String, PlayerViewDto>>(String(gameEvent.body))
+    @Bean
+    fun playerEventQueue() = Queue(PLAYER_EVENT)
+
+    @RabbitListener(queues = [PLAYER_EVENT])
+    fun sendPlayerEvents(playerEvent: AmqpMessage) = objectMapper
+        .readValue<Map<String, PlayerViewDto>>(String(playerEvent.body))
         .forEach { (player, view) ->
             websocketTemplate.convertAndSend(
                 "/games-broker/${view.id}/$player",

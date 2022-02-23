@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Bean
 @EnableRabbit
 class LostcitiesPlayerEventsApplication
 
+@Bean
+fun mapper() = jacksonObjectMapper().registerKotlinModule()
+
 fun main(args: Array<String>) {
     runApplication<LostcitiesPlayerEventsApplication>(*args)
 }
-
-@Bean
-fun mapper() = jacksonObjectMapper().registerKotlinModule()
