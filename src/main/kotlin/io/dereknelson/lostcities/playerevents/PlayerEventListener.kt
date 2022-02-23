@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.playerevents.listener
+package io.dereknelson.lostcities.playerevents
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -17,21 +17,15 @@ class PlayerEventListener(
 ) {
 
     @Bean
-    fun createGame(): Queue {
-        return Queue("player-event")
-    }
+    fun createGame() = Queue("player-event")
 
     @RabbitListener(queues = ["player-event"])
-    fun createGame(gameEvent: AmqpMessage) {
-        println("Retrieved gameEvent: ${String(gameEvent.body)}")
-
-        val events = objectMapper.readValue<Map<String, PlayerViewDto>>(String(gameEvent.body))
-
-        events.forEach { (player, view) ->
+    fun createGame(gameEvent: AmqpMessage) = objectMapper
+        .readValue<Map<String, PlayerViewDto>>(String(gameEvent.body))
+        .forEach { (player, view) ->
             websocketTemplate.convertAndSend(
                 "/games-broker/${view.id}/$player",
                 view
             )
         }
-    }
 }

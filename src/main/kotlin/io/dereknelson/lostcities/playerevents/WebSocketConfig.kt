@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.playerevents.config
+package io.dereknelson.lostcities.playerevents
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
