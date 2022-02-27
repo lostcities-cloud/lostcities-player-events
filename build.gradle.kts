@@ -30,6 +30,8 @@ repositories {
 val ktlint by configurations.creating
 
 dependencies {
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+
 	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
