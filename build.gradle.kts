@@ -91,6 +91,12 @@ tasks.getByName<BootBuildImage>("bootBuildImage") {
     imageName = "dereknelson.io/library/${project.name}"
     environment = mapOf("BP_JVM_VERSION" to "17.*")
     builder = "paketobuildpacks/builder:base"
+    buildpacks = listOf(
+        "gcr.io/paketo-buildpacks/eclipse-openj9",
+        "paketo-buildpacks/java",
+        "gcr.io/paketo-buildpacks/spring-boot"
+
+    )
 }
 
 tasks.withType<Test> {
