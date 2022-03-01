@@ -1,7 +1,7 @@
 logging:
   level:
     ROOT: error
-    io.dereknelson.lostcities: debug
+    io.dereknelson.lostcities: info
     org.springframework.security.web.FilterChainProxy: debug
     org.hibernate: info
     org.springframework.amqp.rabbit: debug
