@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.dereknelson.lostcities.models.PlayerViewDto
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.annotation.RabbitListener
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
@@ -20,7 +21,7 @@ class PlayerEventListener(
         const val PLAYER_EVENT = "player-event"
     }
 
-    @Bean
+    @Bean @Qualifier(PLAYER_EVENT)
     fun playerEventQueue() = Queue(PLAYER_EVENT)
 
     @RabbitListener(queues = [PLAYER_EVENT])
