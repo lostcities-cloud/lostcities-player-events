@@ -1,0 +1,26 @@
+logging:
+  level:
+    ROOT: error
+    io.dereknelson.lostcities: debug
+    org.springframework.security.web.FilterChainProxy: error
+    org.springframework.amqp.rabbit: error
+
+spring:
+  application.name: player-events
+  profiles:
+    active: dev
+  rabbitmq:
+    host: 172.20.0.60
+    port: 5672
+    username: guest
+    password: guest
+
+server:
+  port: 8080
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /api/player-events
+
+management:
+  endpoints.web.exposure.include: metrics, prometheus
+  metrics.tags.application: ${spring.application.name}

@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.6.3"
+    id("org.springframework.boot") version "2.5.8"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
@@ -44,6 +44,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
+
+    implementation("com.google.cloud:spring-cloud-gcp-starter:2.0.8")
+    implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager:2.0.8")
 
 	ktlint("com.pinterest:ktlint:0.44.0") {
 		attributes {
@@ -92,15 +95,26 @@ tasks.bootRun {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "dereknelson.io/library/${project.name}"
-    environment = mapOf("BP_JVM_VERSION" to "17.*")
+    imageName = "ghcr.io/lostcities-cloud/${project.name}:$version"
+    isPublish = true
+    environment = mapOf(
+        "BP_JVM_VERSION" to "17.*",
+        "BPL_DEBUG_ENABLED" to "true"
+    )
     builder = "paketobuildpacks/builder:base"
     buildpacks = listOf(
         "gcr.io/paketo-buildpacks/eclipse-openj9",
         "paketo-buildpacks/java",
         "gcr.io/paketo-buildpacks/spring-boot"
-
     )
+
+    docker {
+        publishRegistry {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+            email = "lostcities@dereknelson.io"
+        }
+    }
 }
 
 tasks.withType<Test> {
