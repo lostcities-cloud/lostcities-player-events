@@ -34,6 +34,8 @@ dependencies {
 
 	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 
+    implementation("org.springframework.boot:spring-boot-devtools")
+
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

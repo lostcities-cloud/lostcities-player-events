@@ -1,17 +1,27 @@
+spring:
+  application.name: player-events
+  devtools.restart.enabled: true
+  rabbitmq:
+    host: 172.20.0.60
+    port: 5672
+    username: guest
+    password: guest
+
 logging:
   level:
     ROOT: error
     io.dereknelson.lostcities: debug
     org.springframework.security.web.FilterChainProxy: error
     org.springframework.amqp.rabbit: error
-
-spring:
-  application.name: player-events
-  rabbitmq:
-    host: 172.20.0.60
-    port: 5672
-    username: guest
-    password: guest
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: '%d{"yyyy-MM-dd''T''HH:mm:ss,SSS"} application=${spring.application.name} profiles=${spring.profiles.active} %-5level [%thread] %logger : %msg%n'
+  file:
+    name: ${user.home}/Logs/${spring.application.name}-dev.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 10
 
 server:
   port: 8093
