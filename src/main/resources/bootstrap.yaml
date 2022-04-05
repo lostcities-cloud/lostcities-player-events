@@ -1,1 +1,1 @@
-spring.cloud.gcp.secretmanager.enabled: false
+spring.cloud.gcp.secretmanager.enabled: ${SECRET_MANAGER:false}

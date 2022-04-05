@@ -6,6 +6,17 @@ spring:
     port: 5672
     username: guest
     password: guest
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+        healthCheckInterval: 15s
+        metadata:
+          application: player-events
+        tags: urlprefix-${server.servlet.context-path}
+        acl-token: b33bb520-ee21-9897-b223-da969dea60e3
 
 logging:
   level:

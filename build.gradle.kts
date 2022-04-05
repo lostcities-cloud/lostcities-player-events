@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.5.8"
+    id("org.springframework.boot") version "2.6.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
@@ -47,6 +47,7 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery:3.1.0")
     implementation("com.google.cloud:spring-cloud-gcp-starter:2.0.8")
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager:2.0.8")
 
@@ -97,11 +98,12 @@ tasks.bootRun {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "ghcr.io/lostcities-cloud/${project.name}:$version"
+    imageName = "ghcr.io/lostcities-cloud/${project.name}:latest"
     isPublish = true
     environment = mapOf(
         "BP_JVM_VERSION" to "17.*",
-        "BPL_DEBUG_ENABLED" to "true"
+        "BPL_DEBUG_ENABLED" to "true",
+        "JAVA_TOOL_OPTIONS" to "-Xquickstart -Xshareclasses:cacheDir=/cache"
     )
     builder = "paketobuildpacks/builder:base"
     buildpacks = listOf(

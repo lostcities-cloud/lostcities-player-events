@@ -11,6 +11,7 @@ spring:
     active: dev
 
 
+
 server:
   port: 8080
   forward-headers-strategy: framework
@@ -19,7 +20,7 @@ server:
 
 management:
     endpoints:
-        web.exposure.include: metrics, prometheus
+        web.exposure.include: metrics, prometheus, health
     metrics:
         tags:
             application: ${spring.application.name}

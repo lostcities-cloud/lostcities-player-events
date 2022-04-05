@@ -7,16 +7,13 @@ logging:
 
 spring:
   application.name: player-events
-  profiles:
-    active: dev
   rabbitmq:
     addresses: ${sm://lostcities_event_queue_url}
     port: 1883
-  cloud.gcp.secretsmanager:
-    enabled: true
-    bootstrap: true
-    credentials.encoded-key: ${SECRET_MANAGER_KEY:""}
-    project-id: lostcities-cloud
+  cloud:
+    consul:
+      enabled: false
+
 
 server:
   port: 8080
