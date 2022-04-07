@@ -11,8 +11,7 @@ spring:
     addresses: ${sm://lostcities_event_queue_url}
     port: 1883
   cloud:
-    consul:
-      enabled: false
+    consul.enabled: false
 
 
 server:
