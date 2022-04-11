@@ -101,7 +101,7 @@ tasks.bootRun {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "ghcr.io/lostcities-cloud/${project.name}:latest"
+    imageName = "ghcr.io/lostcities-cloud/${project.name}"
     isPublish = true
     environment = mapOf(
         "BP_JVM_VERSION" to "17.*",

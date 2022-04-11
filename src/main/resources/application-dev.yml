@@ -9,6 +9,9 @@ spring:
   cloud:
     consul.enabled: false
 
+server:
+  port: 8093
+
 logging:
   level:
     ROOT: error
@@ -25,5 +28,3 @@ logging:
       max-file-size: 10MB
       max-history: 10
 
-server:
-  port: 8093
