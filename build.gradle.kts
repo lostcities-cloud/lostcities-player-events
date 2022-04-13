@@ -100,30 +100,6 @@ tasks.bootRun {
 	}
 }
 
-tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "ghcr.io/lostcities-cloud/${project.name}"
-    isPublish = true
-    environment = mapOf(
-        "BP_JVM_VERSION" to "17.*",
-        "BPL_DEBUG_ENABLED" to "true",
-        "JAVA_TOOL_OPTIONS" to "-Xquickstart -Xshareclasses:cacheDir=/cache"
-    )
-    builder = "paketobuildpacks/builder:base"
-    buildpacks = listOf(
-        "gcr.io/paketo-buildpacks/eclipse-openj9",
-        "paketo-buildpacks/java",
-        "gcr.io/paketo-buildpacks/spring-boot"
-    )
-
-    docker {
-        publishRegistry {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
-            email = "lostcities@dereknelson.io"
-        }
-    }
-}
-
 jib {
 	from {
 		image = "registry://eclipse-temurin:16-jdk-alpine"
