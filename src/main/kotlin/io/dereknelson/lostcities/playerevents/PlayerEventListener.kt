@@ -58,13 +58,13 @@ class PlayerEventListener(
         objectMapper.readValue<Map<String, PlayerViewDto>>(
             String(playerEvent.body)
         )
-        .let { logger.info { "Sending player events: $it" }; it }
-        .forEach { (player, view) ->
-            websocketTemplate.convertAndSend(
-                "/games-broker/${view.id}/$player",
-                view
-            )
-        }
+            .let { logger.info { "Sending player events: $it" }; it }
+            .forEach { (player, view) ->
+                websocketTemplate.convertAndSend(
+                    "/games-broker/${view.id}/$player",
+                    view
+                )
+            }
 
     @RabbitListener(queues = [COMMAND_ERROR_QUEUE])
     fun sendCommandErrorEvent(playerEvent: AmqpMessage) =
