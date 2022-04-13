@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
 
     options {
         ansiColor('xterm')
@@ -11,21 +11,28 @@ pipeline {
     }
 
     stages {
-        stage('Build') { 
+        stage('ktlint') {
             steps {
                 withGradle {
-                    sh './gradlew build'
+                    sh './gradlew ktlintCheck'
                 }
             }
         }
-        stage('Test') { 
+        stage('Assemble') {
+            steps {
+                withGradle {
+                    sh './gradlew assemble'
+                }
+            }
+        }
+        stage('Test') {
             steps {
                 withGradle {
                     sh './gradlew test'
-                } 
+                }
             }
         }
-        stage('Publish') { 
+        stage('Publish') {
             steps {
                 withGradle {
                     sh './gradlew jib'
