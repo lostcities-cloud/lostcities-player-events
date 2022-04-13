@@ -131,8 +131,13 @@ jib {
 		// args = []
 		// ports = ["8080/tcp"]
 	}
+
+
 }
-jib.to.image = 'ghcr.io/lostcities-cloud/${project.name}'
+jib.to.image = "ghcr.io/lostcities-cloud/${project.name}"
+jib.to.auth.username = System.getenv("GH_ACTOR")
+jib.to.auth.password = System.getenv("GH_TOKEN")
+
 
 tasks.withType<Test> {
 	useJUnitPlatform()
