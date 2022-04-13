@@ -5,7 +5,7 @@ plugins {
     id("org.springframework.boot") version "2.6.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("org.jetbrains.dokka") version "1.6.10"
-
+	id("com.google.cloud.tools.jib") version "3.1.4"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
 }
@@ -123,6 +123,16 @@ tasks.getByName<BootBuildImage>("bootBuildImage") {
         }
     }
 }
+
+jib {
+	container {
+		// jvmFlags = ["-Xms512m", "-Xdebug"]
+		mainClass = "io.dereknelson.lostcities.playerevents.DemoApplication"
+		// args = []
+		// ports = ["8080/tcp"]
+	}
+}
+jib.to.image = 'ghcr.io/lostcities-cloud/${project.name}'
 
 tasks.withType<Test> {
 	useJUnitPlatform()
