@@ -19,8 +19,8 @@ repositories {
 	maven {
 		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
 		credentials {
-			username = System.getenv("GITHUB_ACTOR")
-			password = System.getenv("GITHUB_TOKEN")
+			username = System.getenv("GH_ACTOR")
+			password = System.getenv("GH_TOKEN")
 		}
 	}
 
@@ -125,19 +125,17 @@ tasks.getByName<BootBuildImage>("bootBuildImage") {
 }
 
 jib {
-	container {
-		// jvmFlags = ["-Xms512m", "-Xdebug"]
-		mainClass = "io.dereknelson.lostcities.playerevents.DemoApplication"
-		// args = []
-		// ports = ["8080/tcp"]
+	from {
+		image = "registry://eclipse-temurin:16-jdk-alpine"
 	}
-
-
+	to {
+		image = "ghcr.io/lostcities-cloud/${project.name}:latest"
+		auth {
+			username = System.getenv("GH_ACTOR")
+    		password = System.getenv("GH_TOKEN")
+		}
+	}
 }
-jib.to.image = "ghcr.io/lostcities-cloud/${project.name}"
-jib.to.auth.username = System.getenv("GH_ACTOR")
-jib.to.auth.password = System.getenv("GH_TOKEN")
-
 
 tasks.withType<Test> {
 	useJUnitPlatform()
