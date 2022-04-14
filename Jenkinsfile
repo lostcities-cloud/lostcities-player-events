@@ -10,6 +10,10 @@ pipeline {
         GH_TOKEN = credentials('GITHUB_TOKEN')
     }
 
+    tools {
+       jdk "openjdk-17"
+    }
+
     stages {
         stage('ktlint') {
             steps {
@@ -31,8 +35,13 @@ pipeline {
                     sh './gradlew check'
                 }
             }
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
+                }
+            }
         }
-        stage('Publish') {
+        stage('Publish Docker') {
             steps {
                 withGradle {
                     sh './gradlew jib'
@@ -41,9 +50,4 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit 'build/test-results/test/*.xml'
-        }
-    }
 }
