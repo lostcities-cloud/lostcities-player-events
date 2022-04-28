@@ -12,13 +12,6 @@ server:
   servlet:
       context-path: /api/player-events
 
-management:
-    endpoints:
-        web.exposure.include: metrics, prometheus
-    metrics:
-        tags:
-            application: ${spring.application.name}
-
 logging:
   level:
     ROOT: error
