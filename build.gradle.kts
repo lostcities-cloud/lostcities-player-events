@@ -2,25 +2,24 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.3"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot") version "3.1.+"
+    id("io.spring.dependency-management") version "1.1.4"
     id("org.jetbrains.dokka") version "1.6.10"
 	id("com.google.cloud.tools.jib") version "3.2.1"
-	kotlin("jvm") version "1.6.10"
-	kotlin("plugin.spring") version "1.6.10"
+	kotlin("jvm") version "2.0.+"
+	kotlin("plugin.spring") version "2.0.+"
 }
 
 group = "io.dereknelson.lostcities"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_16
 
 repositories {
 
 	maven {
 		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
 		credentials {
-			username = System.getenv("GH_ACTOR")
-			password = System.getenv("GH_TOKEN")
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
 		}
 	}
 
@@ -34,7 +33,8 @@ val ktlint by configurations.creating
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
+    implementation(project(":lostcities-common"))
+    implementation(project(":lostcities-models"))
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
@@ -48,10 +48,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
-
-    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery:3.1.0")
-    implementation("com.google.cloud:spring-cloud-gcp-starter:2.0.8")
-    implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager:2.0.8")
 
 	ktlint("com.pinterest:ktlint:0.44.0") {
 		attributes {
@@ -87,17 +83,21 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
 	jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "16"
-	}
-}
 
-tasks.bootRun {
-	if (project.hasProperty("debug_jvm")) {
-		jvmArgs("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5935")
-	}
+tasks.withType<KotlinCompile>() {
+
+    kotlinOptions {
+        jvmTarget = "21"
+        apiVersion = "2.1"
+        languageVersion = "2.1"
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+    }
+
+    // you can also add additional compiler args,
+    // like opting in to experimental features
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-opt-in=kotlin.RequiresOptIn",
+    )
 }
 
 jib {
