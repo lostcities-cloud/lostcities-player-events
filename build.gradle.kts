@@ -2,10 +2,11 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.+"
+    id("org.springframework.boot") version "3.2.+"
+    // id("org.graalvm.buildtools.native") version "0.10.+"
     id("io.spring.dependency-management") version "1.1.4"
     id("org.jetbrains.dokka") version "1.6.10"
-	id("com.google.cloud.tools.jib") version "3.2.1"
+	id("com.google.cloud.tools.jib") version "3.4.3"
 	kotlin("jvm") version "2.0.+"
 	kotlin("plugin.spring") version "2.0.+"
 }
@@ -60,7 +61,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-val outputDir = "${project.buildDir}/reports/ktlint/"
+val outputDir = "${layout.buildDirectory}/reports/ktlint/"
 val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
 
 val ktlintCheck by tasks.creating(JavaExec::class) {
@@ -86,23 +87,19 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
 
 tasks.withType<KotlinCompile>() {
 
-    kotlinOptions {
-        jvmTarget = "21"
-        apiVersion = "2.1"
-        languageVersion = "2.1"
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-    }
+    compilerOptions {
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
 
-    // you can also add additional compiler args,
-    // like opting in to experimental features
-    kotlinOptions.freeCompilerArgs += listOf(
-        "-opt-in=kotlin.RequiresOptIn",
-    )
+        freeCompilerArgs.addAll(listOf(
+            "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"
+        ))
+    }
 }
 
 jib {
 	from {
-		image = "registry://adoptopenjdk/openjdk16-openj9:alpine-slim"
+        image = "registry://amd64/eclipse-temurin:21-alpine"
 	}
 	to {
 		image = "ghcr.io/lostcities-cloud/${project.name}:latest"
