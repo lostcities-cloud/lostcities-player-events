@@ -48,6 +48,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+    implementation("org.springframework.cloud:spring-cloud-dependencies")
+    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
 
 	ktlint("com.pinterest:ktlint:0.44.0") {
