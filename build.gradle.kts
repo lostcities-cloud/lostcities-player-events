@@ -31,6 +31,13 @@ repositories {
 
 val ktlint by configurations.creating
 
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.5")
+    }
+}
+
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
@@ -48,7 +55,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    implementation("org.springframework.cloud:spring-cloud-dependencies")
     implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
