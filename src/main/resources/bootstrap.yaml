@@ -1,7 +1,7 @@
 spring:
   cloud:
     consul:
-      host: host.docker.internal
+      host: 127.0.0.1
       port: 8500
       discovery:
         healthCheckPath: ${server.servlet.context-path}/actuator/health
