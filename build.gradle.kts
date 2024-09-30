@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "3.2.+"
+    id("io.spring.dependency-management") version "1.1.+"
     // id("org.graalvm.buildtools.native") version "0.10.+"
-    id("io.spring.dependency-management") version "1.1.4"
     id("org.jetbrains.dokka") version "1.6.10"
 	id("com.google.cloud.tools.jib") version "3.4.3"
 	kotlin("jvm") version "2.0.+"
@@ -34,6 +34,7 @@ val ktlint by configurations.creating
 
 dependencyManagement {
     imports {
+        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.5")
     }
 }
