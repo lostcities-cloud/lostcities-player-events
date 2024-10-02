@@ -7,7 +7,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 
-@SpringBootApplication
+@SpringBootApplication(
+    scanBasePackages = [
+        "io.dereknelson.lostcities.gamestate",
+        "io.dereknelson.lostcities.common.auth",
+        "io.dereknelson.lostcities.common.library",
+    ],
+)
 @EnableRabbit
 class LostcitiesPlayerEventsApplication
 
