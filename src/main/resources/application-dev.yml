@@ -2,13 +2,14 @@ spring:
   application.name: player-events
   devtools.restart.enabled: true
   rabbitmq:
-    host: rabbitmq.service.consul
+    host: ${RABBITMQ_IP}
     port: 5672
     username: guest
     password: guest
   cloud:
     consul:
-      host: 192.168.1.231
+      enabled: false
+      host: 127.0.0.1
       port: 8500
       discovery:
         healthCheckPath: ${server.servlet.context-path}/actuator/health
