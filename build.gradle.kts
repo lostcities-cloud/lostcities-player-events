@@ -1,4 +1,3 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -6,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.+"
     // id("org.graalvm.buildtools.native") version "0.10.+"
     id("org.jetbrains.dokka") version "1.6.10"
-	id("com.google.cloud.tools.jib") version "3.4.3"
+	id("com.google.cloud.tools.jib") version "3.4.2"
 	kotlin("jvm") version "2.0.+"
 	kotlin("plugin.spring") version "2.0.+"
 }
@@ -35,7 +34,6 @@ val ktlint by configurations.creating
 dependencyManagement {
     imports {
         mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.5")
     }
 }
 
@@ -55,8 +53,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-
-    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
 
@@ -109,7 +105,7 @@ tasks.withType<KotlinCompile>() {
 
 jib {
 	from {
-        image = "registry://amd64/eclipse-temurin:21-alpine"
+        image = "registry://bellsoft/liberica-openjdk-alpine:21.0.4-9-cds"
 	}
 	to {
 		image = "ghcr.io/lostcities-cloud/${project.name}:latest"

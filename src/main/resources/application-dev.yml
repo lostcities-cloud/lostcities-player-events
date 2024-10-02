@@ -6,18 +6,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-  cloud:
-    consul:
-      enabled: false
-      host: 127.0.0.1
-      port: 8500
-      discovery:
-        healthCheckPath: ${server.servlet.context-path}/actuator/health
-        healthCheckInterval: 15s
-        metadata:
-          application: ${spring.application.name}
-        tags: urlprefix-${server.servlet.context-path}
-
 
 server:
   port: 8093
