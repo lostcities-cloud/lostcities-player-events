@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean
 
 @SpringBootApplication(
     scanBasePackages = [
-        "io.dereknelson.lostcities.gamestate",
+        "io.dereknelson.lostcities.playerevents",
         "io.dereknelson.lostcities.common.auth",
         "io.dereknelson.lostcities.common.library",
     ],

@@ -16,7 +16,7 @@ server:
   port: 8080
   forward-headers-strategy: framework
   servlet:
-      contextPath: /api/player-events
+      contextPath: /api
 
 management:
     endpoints:

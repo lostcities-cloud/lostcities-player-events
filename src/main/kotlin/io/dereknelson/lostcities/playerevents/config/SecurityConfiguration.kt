@@ -37,7 +37,7 @@ class SecurityConfiguration(
             web
                 .ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
-                // .requestMatchers("/api/**")
+                 .requestMatchers("/player-events")
                 //.requestMatchers("/app/**/*.{js,html}")
                 .requestMatchers("/management/health")
                 .requestMatchers("/i18n/**")
