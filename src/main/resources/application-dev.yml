@@ -42,3 +42,4 @@ management:
         include: "*"
   server:
     port: 4452
+    base-path: /actuator/${spring.application.name}

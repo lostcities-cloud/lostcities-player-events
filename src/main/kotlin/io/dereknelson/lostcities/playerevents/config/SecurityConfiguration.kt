@@ -54,7 +54,7 @@ class SecurityConfiguration(
 
         http.csrf { it.disable() }
             .cors { it.configure(http) }
-            .addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+            //.addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
             .exceptionHandling {}
             .headers { headersConfigurer ->
                 headersConfigurer.contentSecurityPolicy {
