@@ -54,7 +54,7 @@ class SecurityConfiguration(
 
         http.csrf { it.disable() }
             .cors { it.configure(http) }
-            .addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+            //.addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
             .exceptionHandling {}
             .headers { headersConfigurer ->
                 headersConfigurer.contentSecurityPolicy {
@@ -71,7 +71,7 @@ class SecurityConfiguration(
             .authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(AntPathRequestMatcher("/api/**")).hasAuthority(AuthoritiesConstants.USER)
+                    .requestMatchers("/player-events/**").permitAll()
                     .requestMatchers(AntPathRequestMatcher("/actuator/swagger-ui/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/actuator/openapi/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
