@@ -38,7 +38,7 @@ class SecurityConfiguration(
                 .ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
                  .requestMatchers("/player-events")
-                //.requestMatchers("/app/**/*.{js,html}")
+                .requestMatchers("/actuator/**")
                 .requestMatchers("/management/health")
                 .requestMatchers("/i18n/**")
                 .requestMatchers("/content/**")
@@ -70,15 +70,9 @@ class SecurityConfiguration(
             }
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+                    .requestMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers("/player-events/**").permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/swagger-ui/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/openapi/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/health")).anonymous()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/health/**")).anonymous()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/info")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/prometheus")).permitAll()
+                    .requestMatchers("/actuator/**").permitAll()
                 //.requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
             }
         // @formatter:on

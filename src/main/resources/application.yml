@@ -19,8 +19,14 @@ server:
       contextPath: /api
 
 management:
-    endpoints:
-        web.exposure.include: metrics, prometheus, health
-    metrics:
-        tags:
-            application: ${spring.application.name}
+  endpoint.health:
+    show-details: "ALWAYS"
+  metrics.tags:
+    application: ${spring.application.name}
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 4452
+    base-path: /management/${spring.application.name}
