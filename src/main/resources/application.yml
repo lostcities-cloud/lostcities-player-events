@@ -19,10 +19,16 @@ server:
       contextPath: /api
 
 management:
+  otlp:
+    metrics:
+      export:
+        url: http://192.168.1.231:4318/v1/metrics
+        step: 5s
   endpoint.health:
     show-details: "ALWAYS"
   metrics.tags:
     application: ${spring.application.name}
+    host: ${spring.application.name}.lostcities.dev
   endpoints:
     web:
       exposure:
