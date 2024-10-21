@@ -14,12 +14,18 @@ group = "io.dereknelson.lostcities"
 version = "0.0.1-SNAPSHOT"
 
 repositories {
-
+    maven {
+        url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
+        credentials {
+            username = System.getenv("GH_USER")
+            password = System.getenv("GH_TOKEN")
+        }
+    }
 	maven {
 		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
 		credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
+            username = System.getenv("GH_USER")
+            password = System.getenv("GH_TOKEN")
 		}
 	}
 
@@ -40,8 +46,8 @@ dependencyManagement {
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-    implementation(project(":lostcities-common"))
-    implementation(project(":lostcities-models"))
+    implementation("io.dereknelson.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
+    implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
