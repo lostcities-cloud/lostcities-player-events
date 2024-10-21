@@ -127,8 +127,8 @@ jib {
     }
 
     to {
-        image = "ghcr.io/lostcities-cloud/${project.name}:latest"
-
+        image = "ghcr.io/lostcities-cloud/${project.name}:${project.version}"
+        tags = mutableSetOf("latest", "${project.version}")
         auth {
             username = System.getenv("GH_USER")
             password = System.getenv("GH_TOKEN")
