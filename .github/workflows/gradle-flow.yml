@@ -20,20 +20,20 @@ jobs:
         with:
           gradle-version: "7.4"
       - name: Assemble
-        run: ./gradlew assemble
+        run: gradle assemble
       - name: Run Ktlint
-        run: ./gradlew ktlintCheck
+        run: gradle ktlintCheck
       - name: Test
-        run: ./gradlew check
+        run: gradle check
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: "test-results/**/*.xml"
       - name: Build docker
-        run: ./gradlew jib
+        run: gradle jib
       - name: Generate Documentation
-        run: ./gradlew dokkaHtml
+        run: gradle dokkaHtml
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
