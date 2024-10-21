@@ -28,8 +28,6 @@ jobs:
         if: always()
         with:
           files: "./build/test-results/**/*.xml"
-      - name: Build docker
-        run: ./gradlew jib
       - name: Generate Documentation
         run: ./gradlew dokkaHtml
       - name: Deploy 🚀
@@ -42,4 +40,6 @@ jobs:
           TARGET_FOLDER: javadoc
       - name: Semver
         run: ./gradlew semver --patch
+      - name: Build docker
+        run: ./gradlew jib
 
