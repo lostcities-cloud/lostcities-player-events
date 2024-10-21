@@ -77,7 +77,7 @@ dependencies {
 		}
 	}
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0-Beta")
-	//implementation("com.fasterxml.jackson.core:jackson-core:2.5.2")
+	implementation("com.fasterxml.jackson.core:jackson-core:2.5.2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
