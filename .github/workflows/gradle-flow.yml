@@ -3,7 +3,7 @@ name: Building application
 on: [push]
 
 env:
-  GH_ACTOR: ${{ secrets.GH_ACTOR }}
+  GH_ACTOR: ${{ secrets.GH_USER }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
@@ -15,25 +15,21 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "7.4"
       - name: Assemble
-        run: gradle assemble
+        run: ./gradlew assemble
       - name: Run Ktlint
-        run: gradle ktlintCheck
+        run: ./gradlew ktlintCheck
       - name: Test
-        run: gradle check
+        run: ./gradlew check
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: "test-results/**/*.xml"
       - name: Build docker
-        run: gradle jib
+        run: ./gradlew jib
       - name: Generate Documentation
-        run: gradle dokkaHtml
+        run: ./gradlew dokkaHtml
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.0
         with:
