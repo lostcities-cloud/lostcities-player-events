@@ -19,10 +19,10 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "7.4"
-      - name: Run Ktlint
-        run: ./gradlew ktlintCheck
       - name: Assemble
         run: ./gradlew assemble
+      - name: Run Ktlint
+        run: ./gradlew ktlintCheck
       - name: Test
         run: ./gradlew check
       - name: Publish Unit Test Results
