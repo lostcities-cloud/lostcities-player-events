@@ -57,8 +57,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("io.micrometer:micrometer-registry-otlp")
-    implementation("io.micrometer:micrometer-tracing-bridge-otel")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
