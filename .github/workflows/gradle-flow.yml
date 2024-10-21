@@ -40,5 +40,6 @@ jobs:
           CLEAN: true
           FOLDER: build/dokka/html
           TARGET_FOLDER: javadoc
-
+      - name: Semver
+        run: ./gradlew semver --patch
 
