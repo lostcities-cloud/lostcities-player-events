@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 @Component
 class PlayerEventListener(
     val objectMapper: ObjectMapper,
-    val websocketTemplate: SimpMessagingTemplate
+    val websocketTemplate: SimpMessagingTemplate,
 ) {
     companion object {
         const val PLAYER_EVENT = "player-event"
@@ -27,7 +27,8 @@ class PlayerEventListener(
         const val COMMAND_ERROR_QUEUE_DLQ = "command-error-event-dlq"
     }
 
-    @Bean @Qualifier(PLAYER_EVENT)
+    @Bean
+    @Qualifier(PLAYER_EVENT)
     fun playerEventQueue() = QueueBuilder
         .durable(PLAYER_EVENT)
         .ttl(5000)
@@ -35,12 +36,14 @@ class PlayerEventListener(
         .withArgument("x-dead-letter-routing-key", PLAYER_EVENT_DLQ)
         .build()!!
 
-    @Bean @Qualifier(PLAYER_EVENT_DLQ)
+    @Bean
+    @Qualifier(PLAYER_EVENT_DLQ)
     fun playerEventDlQueue() = QueueBuilder
         .durable(PLAYER_EVENT_DLQ)
         .build()!!
 
-    @Bean @Qualifier(COMMAND_ERROR_QUEUE)
+    @Bean
+    @Qualifier(COMMAND_ERROR_QUEUE)
     fun commandError() = QueueBuilder
         .durable(COMMAND_ERROR_QUEUE)
         .ttl(5000)
@@ -48,7 +51,8 @@ class PlayerEventListener(
         .withArgument("x-dead-letter-routing-key", COMMAND_ERROR_QUEUE_DLQ)
         .build()!!
 
-    @Bean @Qualifier(COMMAND_ERROR_QUEUE_DLQ)
+    @Bean
+    @Qualifier(COMMAND_ERROR_QUEUE_DLQ)
     fun commandErrorDlQueue() = QueueBuilder
         .durable(COMMAND_ERROR_QUEUE_DLQ)
         .build()!!
@@ -56,13 +60,13 @@ class PlayerEventListener(
     @RabbitListener(queues = [PLAYER_EVENT])
     fun sendPlayerEvents(playerEvent: AmqpMessage) =
         objectMapper.readValue<Map<String, PlayerViewDto>>(
-            String(playerEvent.body)
+            String(playerEvent.body),
         )
             .let { logger.info { "Sending player events: $it" }; it }
             .forEach { (player, view) ->
                 websocketTemplate.convertAndSend(
                     "/games-broker/${view.id}/$player",
-                    view
+                    view,
                 )
             }
 
@@ -70,11 +74,11 @@ class PlayerEventListener(
     fun sendCommandErrorEvent(playerEvent: AmqpMessage) =
 
         objectMapper.readValue<CommandError>(
-            String(playerEvent.body)
+            String(playerEvent.body),
         ).let {
             websocketTemplate.convertAndSend(
                 "/games-broker/${it.id}/${it.player}/errors",
-                it
+                it,
             )
         }
 }
