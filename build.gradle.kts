@@ -105,6 +105,9 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
 	jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
 
+semver {
+    noGitPush = false
+}
 
 tasks.withType<KotlinCompile>() {
 
