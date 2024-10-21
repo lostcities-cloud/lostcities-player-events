@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -37,6 +38,7 @@ class SecurityConfiguration(
             web
                 .ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**"))
                 .requestMatchers("/player-events")
                 .requestMatchers("/actuator/**")
                 .requestMatchers("/management/health")
