@@ -27,6 +27,6 @@ jobs:
       - name: Setup `nomad`
         uses: hashicorp/setup-nomad@main
         id: setup
-      - run: echo "VERSION=$(grep \"^version\" gradle.properties | cut -d'=' -f2)" >> $GITHUB_ENV
+      - run: echo "VERSION=$(grep "^version" gradle.properties | cut -d'=' -f2)" >> $GITHUB_ENV
       - run: |
           nomad job run -var="version=${{ env.VERSION }}" --address=http://192.168.1.233:4646 ./player-events.nomad.hcl
