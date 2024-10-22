@@ -1,4 +1,4 @@
-name: Building application
+name: Deploy
 
 on:
   workflow_run:
