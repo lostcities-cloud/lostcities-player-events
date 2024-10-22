@@ -1,0 +1,30 @@
+name: Building application
+
+on:
+  workflow_run:
+    workflows: [Building application]
+    types:
+      - completed
+
+env:
+  GH_USER: ${{ secrets.GH_USER }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up WireGuard
+        uses: egor-tensin/setup-wireguard@v1
+        with:
+          endpoint: '${{ secrets.ENDPOINT }}'
+          endpoint_public_key: '${{ secrets.PUBLIC_KEY }}'
+          ips: '${{ secrets.ADDRESS }}'
+          allowed_ips: '${{ secrets.ALLOWED_IPS }}'
+          private_key: '${{ secrets.PRIVATE_KEY }}'
+          preshared_key: '${{ secrets.PRESHARED_KEY }}'
+      - name: Setup `nomad`
+        uses: hashicorp/setup-nomad@main
+        id: setup
+      - run: nomad job run --address=http://192.168.1.233:4646 ./player-events.nomad.hcl
