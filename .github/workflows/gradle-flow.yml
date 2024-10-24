@@ -5,7 +5,7 @@ on: [push]
 env:
   GH_USER: ${{ secrets.GH_USER }}
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
+  NVD_KEY: ${{ secrets.NVD_KEY }}
 jobs:
   build:
     runs-on: ubuntu-latest
