@@ -23,6 +23,18 @@ jobs:
         run: ./gradlew ktlintCheck
       - name: Test
         run: ./gradlew check
+      - name: Dependency Scan Cache
+        id: dependency-scan-cache
+        uses: actions/cache@v4
+        with:
+          path: owasap
+          key: dependency-scan-cache
+      - name: Check Dependencies
+        run: ./gradlew dependencyCheckAnalyze
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-results
+          path: ./build/reports/**
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
