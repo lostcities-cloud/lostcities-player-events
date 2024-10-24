@@ -1,3 +1,6 @@
+.env
+owasp/
+
 HELP.md
 .gradle
 build/
