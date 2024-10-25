@@ -45,6 +45,14 @@ dependencyManagement {
     }
 }
 
+configurations.matching { it.name.startsWith("dokka") }.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group.startsWith("com.fasterxml.jackson")) {
+            useVersion("2.15.3")
+        }
+    }
+}
+
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
