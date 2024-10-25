@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: [Building application]
+    workflows: [Release Build]
     types:
       - completed
 
