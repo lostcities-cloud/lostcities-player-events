@@ -3,16 +3,36 @@ variable "version" {
     default = "latest"
 }
 
+variable "cpu" {
+    type = number
+    default = 500
+}
+
+variable "memory" {
+    type = number
+    default = 500
+}
+
+variable count {
+    type = number
+    default = 2
+}
+
+variable max_parallel {
+    type = number
+    default = 6
+}
+
 job "player-events" {
     region = "global"
     datacenters = [ "tower-datacenter"]
 
     update {
-        max_parallel = 4
+        max_parallel = var.max_parallel
     }
 
     group "player-events" {
-        count = 2
+        count = var.count
 
         restart {
             attempts = 10
@@ -75,8 +95,8 @@ job "player-events" {
             }
 
             resources {
-                cpu    = 100
-                memory = 500
+                cpu    = var.cpu
+                memory = var.memory
             }
 
             config {
