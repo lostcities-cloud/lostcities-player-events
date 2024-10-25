@@ -7,7 +7,7 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
   NVD_KEY: ${{ secrets.NVD_KEY }}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,8 +26,6 @@ jobs:
         run: ./gradlew ktlintCheck
       - name: Test
         run: ./gradlew check
-      - name: Check tree
-        run: git status
       - name: Dependency  Scan Cache
         id: dependency-scan-cache
         uses: actions/cache@v4
@@ -55,8 +53,6 @@ jobs:
           CLEAN: true
           FOLDER: build/dokka/html
           TARGET_FOLDER: javadoc
-      - name: Check tree
-        run: git status
       - name: Semver
         run: ./gradlew semver --patch
       - name: Build docker

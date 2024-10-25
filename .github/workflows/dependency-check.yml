@@ -1,0 +1,31 @@
+name: Dependency Check
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+
+
+env:
+  GH_USER: ${{ secrets.GH_USER }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  NVD_KEY: ${{ secrets.NVD_KEY }}
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 4
+      - name: Dependency  Scan Cache
+        id: dependency-scan-cache
+        uses: actions/cache@v4
+        with:
+          path: owasap
+          key: dependency-scan-cache
+      - name: Check Dependencies
+        run: ./gradlew dependencyCheckAnalyze -Dorg.gradle.jvmargs="-Xmx4g"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dependency-scan-results
+          path: ./build/reports/**
