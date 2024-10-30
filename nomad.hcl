@@ -27,10 +27,6 @@ job "player-events" {
     region = "global"
     datacenters = [ "tower-datacenter"]
 
-    update {
-        max_parallel = var.max_parallel
-    }
-
     spread {
         attribute = "${node.datacenter}"
         weight    = 100
@@ -135,10 +131,10 @@ EOF
         }
 
         update {
-            max_parallel     = 2
-            min_healthy_time = "5s"
+            max_parallel     = var.max_parallel
+            min_healthy_time = "20s"
             healthy_deadline = "3m"
-            auto_revert      = false
+            auto_revert      = true
             canary           = 1
             auto_promote     = true
         }
