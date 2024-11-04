@@ -31,6 +31,7 @@ class PlayerEventListener(
     @Qualifier(PLAYER_EVENT)
     fun playerEventQueue() = QueueBuilder
         .durable(PLAYER_EVENT)
+        .quorum()
         .ttl(5000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", PLAYER_EVENT_DLQ)
@@ -40,12 +41,14 @@ class PlayerEventListener(
     @Qualifier(PLAYER_EVENT_DLQ)
     fun playerEventDlQueue() = QueueBuilder
         .durable(PLAYER_EVENT_DLQ)
+        .quorum()
         .build()!!
 
     @Bean
     @Qualifier(COMMAND_ERROR_QUEUE)
     fun commandError() = QueueBuilder
         .durable(COMMAND_ERROR_QUEUE)
+        .quorum()
         .ttl(5000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", COMMAND_ERROR_QUEUE_DLQ)
@@ -55,6 +58,7 @@ class PlayerEventListener(
     @Qualifier(COMMAND_ERROR_QUEUE_DLQ)
     fun commandErrorDlQueue() = QueueBuilder
         .durable(COMMAND_ERROR_QUEUE_DLQ)
+        .quorum()
         .build()!!
 
     @RabbitListener(queues = [PLAYER_EVENT])
