@@ -23,8 +23,8 @@ class PlayerEventListener(
     companion object {
         const val PLAYER_EVENT = "player-event"
         const val PLAYER_EVENT_DLQ = "player-event-dlq"
-        const val COMMAND_ERROR_QUEUE = "command-error-event"
-        const val COMMAND_ERROR_QUEUE_DLQ = "command-error-event-dlq"
+        const val COMMAND_ERROR_QUEUE = "command-error"
+        const val COMMAND_ERROR_QUEUE_DLQ = "command-error-dlq"
     }
 
     @Bean
