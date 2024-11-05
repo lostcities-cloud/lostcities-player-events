@@ -22,7 +22,7 @@ logging:
     org.springframework.security.web.FilterChainProxy: error
     org.springframework.amqp.rabbit: error
   pattern:
-    console: "%d %-5level %logger : %msg%n"
+    console: '%d{"yyyy-MM-dd''T''HH:mm:ss,SSS"} application=${spring.application.name} profiles=${spring.profiles.active} %-5level [%thread] %logger : %msg%n'
     file: '%d{"yyyy-MM-dd''T''HH:mm:ss,SSS"} application=${spring.application.name} profiles=${spring.profiles.active} %-5level [%thread] %logger : %msg%n'
   file:
     name: ${user.home}/Logs/${spring.application.name}-dev.log

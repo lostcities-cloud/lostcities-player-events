@@ -105,11 +105,13 @@ job "player-events" {
                 image = "ghcr.io/lostcities-cloud/lostcities-player-events:${var.version}"
                 ports = ["service-port", "management-port"]
                 logging {
-                  type = "journald"
-                  config {
-                    mode            = "non-blocking"
-                    max-buffer-size = "16m"
-                  }
+                    driver = "journald"
+                    options = [
+                        {
+                            "job" = "lostcities-player-events"
+                        }
+                    ]
+
                 }
             }
 
