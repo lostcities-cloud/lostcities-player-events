@@ -135,7 +135,7 @@ job "player-events" {
           driver = "journald"
           options = [
             {
-              "job" = "lostcities-player-events"
+              "tag" = "redis"
             }
           ]
 
