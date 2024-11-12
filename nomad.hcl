@@ -40,7 +40,7 @@ variable count {
 
 variable max_parallel {
   type    = number
-  default = 2
+  default = 1
 }
 
 job "player-events" {
