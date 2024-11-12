@@ -2,8 +2,8 @@ package io.dereknelson.lostcities.playerevents
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.dereknelson.lostcities.models.PlayerViewDto
 import io.dereknelson.lostcities.models.commands.CommandError
+import io.dereknelson.lostcities.models.state.PlayerViewDto
 import mu.KotlinLogging
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.annotation.RabbitListener
