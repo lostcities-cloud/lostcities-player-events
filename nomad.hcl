@@ -79,6 +79,7 @@ job "player-events" {
       name = "player-events-service"
       port = "service-port"
       tags = ["urlprefix-/api/player-events"]
+
       #address_mode = "alloc"
 
       check {
@@ -95,7 +96,11 @@ job "player-events" {
     service {
       name = "player-events-management"
       port = "management-port"
-      tags = ["urlprefix-/management/player-events/actuator"]
+      tags = [
+        "prometheus",
+        "urlprefix-/management/player-events/actuator",
+        "metricspath-/management/player-events/actuator/prometheus"
+      ]
       #address_mode = "alloc"
 
       check {
