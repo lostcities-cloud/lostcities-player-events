@@ -9,12 +9,20 @@ plugins {
     // id("org.graalvm.buildtools.native") version "0.10.+"
     id("org.jetbrains.dokka") version "2.0.0-Beta"
 	id("com.google.cloud.tools.jib") version "3.4.4"
+    id("org.openrewrite.rewrite") version "6.27.0"
+
+
 	kotlin("jvm") version "2.0.+"
 	kotlin("plugin.spring") version "2.0.+"
 }
 
 group = "io.dereknelson.lostcities"
 version = project.property("version")!!
+
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
+    //exportDatatables = true
+}
 
 repositories {
     maven {
@@ -39,7 +47,6 @@ repositories {
 
 val ktlint by configurations.creating
 
-
 dependencyManagement {
     imports {
         mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
@@ -55,6 +62,9 @@ configurations.matching { it.name.startsWith("dokka") }.configureEach {
 }
 
 dependencies {
+    rewrite("org.openrewrite:rewrite-kotlin:1.21.2")
+    rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
+
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     if(  rootProject.hasProperty("debug")){
