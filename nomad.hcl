@@ -10,7 +10,7 @@ variable "cpu" {
 
 variable "memory" {
   type    = number
-  default = 500
+  default = 512
 }
 
 variable "memory_max" {
@@ -119,6 +119,7 @@ job "player-events" {
 
       env {
         SPRING_PROFILES_ACTIVE = "dev"
+        JAVA_OPTS="-XX:+UseSerialGC -Xss512k -XX:MaxRAM=72m"
       }
 
       resources {
