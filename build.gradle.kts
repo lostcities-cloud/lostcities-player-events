@@ -72,7 +72,7 @@ dependencies {
         implementation(project(":lostcities-models"))
     } else {
         implementation("io.dereknelson.lostcities-cloud:lostcities-common:0.0.5")
-        implementation("io.dereknelson.lostcities-cloud:lostcities-models:0.0.5")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-models:0.0.6")
     }
 
     implementation("org.springframework.boot:spring-boot-devtools")
