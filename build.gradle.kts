@@ -146,7 +146,7 @@ tasks.withType<KotlinCompile>() {
 
 jib {
     from {
-        image = "registry://public.ecr.aws/amazoncorretto:21-alpine-jdk"
+        image = "registry://docker.io/amazoncorretto:21-alpine-jdk"
     }
 
     to {
