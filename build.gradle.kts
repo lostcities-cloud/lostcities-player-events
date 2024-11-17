@@ -146,7 +146,7 @@ tasks.withType<KotlinCompile>() {
 
 jib {
     from {
-        image = "registry://ghcr.io/bell-sw/liberica-openjdk-alpine:21"
+        image = "registry://public.ecr.aws/amazoncorretto:21-alpine-jdk"
     }
 
     to {
