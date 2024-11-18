@@ -9,7 +9,7 @@ spring:
   application.name: player-events
   profiles:
     active: dev
-
+  threads.virtual.enabled: true
 
 
 server:
