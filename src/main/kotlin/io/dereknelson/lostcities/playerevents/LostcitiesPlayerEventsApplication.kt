@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean
     scanBasePackages = [
         "io.dereknelson.lostcities.playerevents",
         "io.dereknelson.lostcities.common.auth",
-        "io.dereknelson.lostcities.common.library",
+        "io.dereknelson.lostcities.common.auditing",
     ],
 )
 @EnableRabbit

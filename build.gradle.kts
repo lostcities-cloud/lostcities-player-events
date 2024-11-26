@@ -71,7 +71,7 @@ dependencies {
         implementation(project(":lostcities-common"))
         implementation(project(":lostcities-models"))
     } else {
-        implementation("io.dereknelson.lostcities-cloud:lostcities-common:0.0.6")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-common:0.0.7")
         implementation("io.dereknelson.lostcities-cloud:lostcities-models:0.0.6")
     }
 

@@ -3,6 +3,11 @@ variable "version" {
   default = "latest"
 }
 
+variable "priority" {
+  type = number
+  default = 20
+}
+
 variable "cpu" {
   type    = number
   default = 500
@@ -47,6 +52,7 @@ job "player-events" {
   region    = "global"
   namespace = "lostcities"
   datacenters = ["tower-datacenter"]
+  priority = var.priority
 
   spread {
     attribute = "${node.datacenter}"
