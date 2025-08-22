@@ -2,16 +2,18 @@ spring:
   application.name: player-events
   devtools.restart.enabled: true
   rabbitmq:
-    host: 127.0.0.1
+    host: localhost
     port: 5672
     username: guest
     password: guest
 
 server:
-  port: 8093
+  port: 8083
+
 management:
   server:
-    port: 4453
+    port: 4455
+
 springdoc:
   use-management-port: true
   api-docs.enabled: true

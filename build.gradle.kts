@@ -7,9 +7,9 @@ plugins {
     id("com.github.rising3.semver") version "0.8.2"
     id("io.spring.dependency-management") version "1.1.+"
     // id("org.graalvm.buildtools.native") version "0.10.+"
-    id("org.jetbrains.dokka") version "2.0.0-Beta"
+    id("org.jetbrains.dokka") version "2.0.0"
 	id("com.google.cloud.tools.jib") version "3.4.4"
-    id("org.openrewrite.rewrite") version "6.27.0"
+    //id("org.openrewrite.rewrite") version "6.27.0"
 
 
 	kotlin("jvm") version "2.0.+"
@@ -19,24 +19,24 @@ plugins {
 group = "io.dereknelson.lostcities"
 version = project.property("version")!!
 
-rewrite {
-    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
+//rewrite {
+    //activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
     //exportDatatables = true
-}
+//}
 
 repositories {
     maven {
         url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
         credentials {
-            username = System.getenv("GH_USER")
-            password = System.getenv("GH_TOKEN")
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
         }
     }
 	maven {
 		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
 		credentials {
-            username = System.getenv("GH_USER")
-            password = System.getenv("GH_TOKEN")
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
 		}
 	}
 
@@ -62,12 +62,12 @@ configurations.matching { it.name.startsWith("dokka") }.configureEach {
 }
 
 dependencies {
-    rewrite("org.openrewrite:rewrite-kotlin:1.21.2")
-    rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
+    //rewrite("org.openrewrite:rewrite-kotlin:1.21.2")
+    //rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-    if(  rootProject.hasProperty("debug")){
+    if(rootProject.hasProperty("debug")){
         implementation(project(":lostcities-common"))
         implementation(project(":lostcities-models"))
     } else {
@@ -100,7 +100,7 @@ dependencies {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
 		}
 	}
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0-Beta")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -146,19 +146,28 @@ tasks.withType<KotlinCompile>() {
 
 jib {
     from {
-        image = "registry://docker.io/library/amazoncorretto:21-alpine-jdk"
+        image = "registry://public.ecr.aws/amazoncorretto/amazoncorretto:21.0.8-al2023-headless"
     }
 
     to {
         image = "ghcr.io/lostcities-cloud/${project.name}:${project.version}"
         tags = mutableSetOf("latest", "${project.version}")
         auth {
-            username = System.getenv("GH_USER")
-            password = System.getenv("GH_TOKEN")
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
         }
     }
 
 }
+
+tasks.bootBuildImage {
+    docker.host = "unix:///run/user/1000/podman/podman.sock"
+}
+
+//tasks.bootBuildImage {
+//    builder = "paketobuildpacks/builder-jammy-buildpackless-tiny"
+//    buildpacks = ["paketobuildpacks/oracle", "paketobuildpacks/java-native-image"]
+//}
 
 dependencyCheck {
     failBuildOnCVSS = 11f

@@ -2,10 +2,10 @@ spring:
   application.name: player-events
   devtools.restart.enabled: true
   rabbitmq:
-    host: ${RABBITMQ_IP}
+    addresses: ${RABBITMQ_IP:rabbitmq}
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
 
 server:
   port: 8093
