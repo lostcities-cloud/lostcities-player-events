@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     jacoco
-    id("org.springframework.boot") version "3.3.+"
+    id("org.springframework.boot") version "3.2.+"
     id("org.owasp.dependencycheck") version "11.0.0"
     id("com.github.rising3.semver") version "0.8.2"
     id("io.spring.dependency-management") version "1.1.+"
     // id("org.graalvm.buildtools.native") version "0.10.+"
-    id("org.jetbrains.dokka") version "2.0.0"
+    id("org.jetbrains.dokka") version "2.1.0"
 	id("com.google.cloud.tools.jib") version "3.4.4"
     //id("org.openrewrite.rewrite") version "6.27.0"
 
@@ -77,6 +77,9 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.5.1")
+    implementation("org.apache.httpcomponents.core5:httpcore5:5.3.6")
+
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -135,8 +138,8 @@ semver {
 tasks.withType<KotlinCompile>() {
 
     compilerOptions {
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
 
         freeCompilerArgs.addAll(listOf(
             "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"
