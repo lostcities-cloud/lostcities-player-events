@@ -13,9 +13,14 @@ server:
 management:
   server:
     port: 4455
+  endpoints:
+    web:
+      exposure:
+        include: "*, openapi, swagger-ui"
 
 springdoc:
   use-management-port: true
+  show-actuator: true
   api-docs.enabled: true
   packagesToScan: io.dereknelson.lostcities.playerevents
 

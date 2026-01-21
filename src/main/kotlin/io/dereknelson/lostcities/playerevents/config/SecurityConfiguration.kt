@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.playerevents.config
 
-import io.dereknelson.lostcities.common.AuthoritiesConstants
+import io.dereknelson.lostcities.common.RoleConstants
 import io.dereknelson.lostcities.common.auth.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
@@ -69,7 +69,7 @@ class SecurityConfiguration(
             }
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .requestMatchers("/api/admin/**").hasAuthority(RoleConstants.ADMIN)
                     .requestMatchers("/player-events/**").permitAll()
                     .requestMatchers("/actuator/**").permitAll()
                 // .requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)

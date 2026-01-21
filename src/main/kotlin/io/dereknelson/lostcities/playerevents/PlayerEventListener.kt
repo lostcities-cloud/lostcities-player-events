@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.dereknelson.lostcities.models.commands.CommandError
 import io.dereknelson.lostcities.models.state.PlayerViewDto
-import mu.KotlinLogging
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Qualifier
@@ -12,8 +13,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.stereotype.Component
 import org.springframework.amqp.core.Message as AmqpMessage
-
-private val logger = KotlinLogging.logger {}
 
 @Component
 class PlayerEventListener(
@@ -26,6 +25,8 @@ class PlayerEventListener(
         const val COMMAND_ERROR_QUEUE = "command-error"
         const val COMMAND_ERROR_QUEUE_DLQ = "command-error-dlq"
     }
+
+    private val logger: Logger = LoggerFactory.getLogger(PlayerEventListener::class.java)
 
     @Bean
     @Qualifier(PLAYER_EVENT)
@@ -66,7 +67,6 @@ class PlayerEventListener(
         objectMapper.readValue<Map<String, PlayerViewDto>>(
             String(playerEvent.body),
         )
-            .let { logger.info { "Sending player events: $it" }; it }
             .forEach { (player, view) ->
                 websocketTemplate.convertAndSend(
                     "/games-broker/${view.id}/$player",

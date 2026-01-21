@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     jacoco
@@ -45,12 +46,20 @@ repositories {
 	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
+tasks.named<BootRun>("bootRun") {
+    if(rootProject.hasProperty("debug")) {
+        systemProperty("spring.profiles.active", "local")
+    }
+}
+
 val ktlint by configurations.creating
 
 dependencyManagement {
     imports {
         mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        mavenBom("org.springframework.data:spring-data-bom:2023.0.+")
     }
+
 }
 
 configurations.matching { it.name.startsWith("dokka") }.configureEach {
@@ -71,32 +80,33 @@ dependencies {
         implementation(project(":lostcities-common"))
         implementation(project(":lostcities-models"))
     } else {
-        implementation("io.dereknelson.lostcities-cloud:lostcities-common:0.0.7")
-        implementation("io.dereknelson.lostcities-cloud:lostcities-models:0.0.6")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-common:${rootProject.extra["lostcities-common.version"]}")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-models:${rootProject.extra["lostcities-models.version"]}")
+
     }
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
-    implementation("org.apache.httpcomponents.client5:httpclient5:5.5.1")
-    implementation("org.apache.httpcomponents.core5:httpcore5:5.3.6")
-
-    implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
+    implementation("org.apache.httpcomponents.client5:httpclient5:${rootProject.extra["httpclient5.version"]}")
+    implementation("org.apache.httpcomponents.core5:httpcore5:${rootProject.extra["httpcore5.version"]}")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.data:spring-data-commons")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0")
-    implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${rootProject.extra["springdoc.version"]}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${rootProject.extra["springdoc.version"]}")
 
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate6")
 
 	ktlint("com.pinterest:ktlint:0.49.1") {
 		attributes {
