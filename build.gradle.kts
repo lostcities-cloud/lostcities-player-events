@@ -13,8 +13,8 @@ plugins {
     //id("org.openrewrite.rewrite") version "6.27.0"
 
 
-	kotlin("jvm") version "2.0.+"
-	kotlin("plugin.spring") version "2.0.+"
+	kotlin("jvm") version "2.3.+"
+	kotlin("plugin.spring") version "2.3.+"
 }
 
 group = "io.dereknelson.lostcities"
@@ -160,8 +160,8 @@ semver {
 tasks.withType<KotlinCompile>() {
 
     compilerOptions {
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_3)
 
         freeCompilerArgs.addAll(listOf(
             "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"
