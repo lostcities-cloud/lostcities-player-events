@@ -13,8 +13,11 @@ plugins {
     //id("org.openrewrite.rewrite") version "6.27.0"
 
 
-	kotlin("jvm") version "2.3.+"
-	kotlin("plugin.spring") version "2.3.+"
+	kotlin("jvm")
+	kotlin("plugin.spring")
+    kotlin("plugin.noarg")
+    kotlin("plugin.serialization")
+
 }
 
 group = "io.dereknelson.lostcities"
@@ -71,7 +74,7 @@ dependencies {
     //rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.10.0")
 
     implementation(project(":lostcities-common"))
     implementation(project(":lostcities-models"))
@@ -100,7 +103,6 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate6")
 
 	ktlint("com.pinterest:ktlint:0.49.1") {
@@ -111,6 +113,11 @@ dependencies {
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+
+noArg {
+    annotation("io.dereknelson.lostcities.models.NoArg")
 }
 
 tasks.named<BootRun>("bootRun") {
@@ -171,7 +178,7 @@ tasks.withType<KotlinCompile>() {
 
 jib {
     from {
-        image = "registry://public.ecr.aws/amazoncorretto/amazoncorretto:21.0.8-al2023-headless"
+        image = "registry://gcr.io/distroless/java21-debian13"
     }
 
     to {

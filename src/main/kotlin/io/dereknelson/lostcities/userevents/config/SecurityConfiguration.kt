@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.playerevents.config
+package io.dereknelson.lostcities.userevents.config
 
 import io.dereknelson.lostcities.common.RoleConstants
 import io.dereknelson.lostcities.common.auth.TokenProvider

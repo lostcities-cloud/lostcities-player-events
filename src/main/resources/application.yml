@@ -5,6 +5,8 @@ logging:
     org.springframework.security.web.FilterChainProxy: error
     org.springframework.amqp.rabbit: error
 
+
+
 spring:
   application.name: player-events
   threads.virtual.enabled: true

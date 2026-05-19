@@ -1,1 +1,1 @@
-rootProject.name = "lostcities-player-events"
+rootProject.name = "lostcities-user-events"

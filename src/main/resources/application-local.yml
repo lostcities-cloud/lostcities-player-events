@@ -1,3 +1,7 @@
+app:
+  instanceId: ${random.uuid}
+  playerEventQueue: "player-event.${app.instanceId}"
+  commandErrorQueue: "commend-error."
 spring:
   application.name: player-events
   devtools.restart.enabled: true
@@ -29,7 +33,9 @@ logging:
     ROOT: error
     io.dereknelson.lostcities: debug
     org.springframework.security.web.FilterChainProxy: error
-    org.springframework.amqp.rabbit: error
+    org.springframework.amqp.rabbit.connection: debug
+    org.springframework.cloud.stream.binder.rabbit: debug
+    org.springframework.amqp: debug
   pattern:
     console: "%d %-5level %logger : %msg%n"
     file: '%d{"yyyy-MM-dd''T''HH:mm:ss,SSS"} application=${spring.application.name} profiles=${spring.profiles.active} %-5level [%thread] %logger : %msg%n'
